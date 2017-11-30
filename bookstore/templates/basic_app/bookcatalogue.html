@@ -1,0 +1,42 @@
+{% extends "basic_app/base.html" %}
+{% block body_block %}
+<center>
+<h1>Book Catalogue</h1>
+<div>
+    {% if book_records %}
+    <h2><table border="2px" >
+        <thead>
+        <th >BookName</th>
+        <th>Price</th>
+        <th>Quant</th>
+        </thead>
+        <form method="POST" action="{% url 'basic_app:view_bookcatalogue' %}">
+            {% csrf_token %}
+    {% for book in book_records %}
+
+    <div>
+        <td>  <input type="checkbox" name="book[]" value="{{ book.book_name}}"> {{ book.book_name}}<br></td>
+        <td > <input  name="price[]" value="{{ book.book_price}}" > </td>
+        <td> <select name="quantity[]" >
+      <option selected="selected" disabled>-----</option>
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+  </select></td>
+    </tr>
+        {% endfor %}
+
+        </table>
+    <input type="submit" value="Submit">
+        </form>
+    </h2>
+    {%else%}
+    <h2>Books {{ booklist }} have been ordered for you!
+    Your total bill is Rs. {{ totalbill }},Thank you for visting Minerva!!</h2>
+    {% endif %}
+</div>
+</center>
+
+{% endblock %}
+
